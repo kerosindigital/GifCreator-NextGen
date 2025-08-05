@@ -1,67 +1,70 @@
-# ================================
-# GifCreator
-# ================================
+# GifCreator-NextGen
 
-GifCreator is a PHP class to create animated GIF from multiple images
+**Note:** This is a next-generation fork of [@Sybio/GifCreator](https://github.com/Sybio/GifCreator) by Clément Guillemain, maintained by [kerosindigital](https://github.com/kerosindigital).
 
-### For what ?
+## What is GifCreator-NextGen?
 
-This class helps you to create an animated GIF image: give multiple images and their duration and that's it !
+GifCreator-NextGen is a modern PHP library for creating animated GIFs from multiple images. It is a refactored and enhanced version of Sybio/GifCreator, supporting strict typing, improved error handling, and optimized resource management for PHP 8+.
 
-### Usage
+## Features
 
-**1 - Creation:**
+- **PHP 8+ compatible:** Uses strict typing and modern PHP syntax.
+- **Improved robustness:** Enhanced error handling and resource management.
+- **Flexible API:** Accepts image resources, file paths, URLs, or binary GIF strings.
+- **Per-frame control:** Supports custom frame durations and loop counts.
+- **Transparency support:** Automatically detects and preserves transparency from the first frame.
+- **Easy integration:** No external dependencies besides PHP GD extension.
 
-```php
-// Create an array containing file paths, resource var (initialized with imagecreatefromXXX), 
-// image URLs or even binary code from image files.
-// All sorted in order to appear.
-$frames = array(
-    imagecreatefrompng("/../images/pic1.png"), // Resource var
-    "/../images/pic2.png", // Image file path
-    file_get_contents("/../images/pic3.jpg"), // Binary source code
-    'http://thisisafakedomain.com/images/pic4.jpg', // URL
-);
+## Requirements
 
-// Create an array containing the duration (in millisecond) of each frames (in order too)
-$durations = array(40, 80, 40, 20);
+- **PHP >= 8.0**
+- **GD extension** enabled
+- **File/URL access** for input images
 
-// Initialize and create the GIF !
-$gc = new GifCreator();
-$gc->create($frames, $durations, 5);
+## Differences from the Original (Sybio/GifCreator)
+
+- Modernized codebase with strict typing and typed properties.
+- Robust error handling using a dedicated exception class.
+- Explicit freeing of GD resources.
+- Improved documentation and clearer method/variable names.
+- Maintained API compatibility for easy migration.
+
+## Installation
+
+Install via Composer:
+
+```bash
+composer require kerosindigital/gifcreator-nextgen
 ```
-The 3rd parameter of create() method allows you to choose the number of loop of your animated gif before it stops.
-In the previous example, I chose 5 loops. Set 0 (zero) to get an infinite loop.
 
-**2 - Get the result:**
-
-You can now get the animated GIF binary:
+## Usage
 
 ```php
+use GifCreatorNextGen\GifCreatorNextGen;
+
+$frames = [
+    imagecreatefrompng('/path/pic1.png'),
+    '/path/pic2.png',
+    file_get_contents('/path/pic3.jpg'),
+    'http://example.com/pic4.jpg',
+];
+$durations = [40, 80, 40, 20]; // durations in hundredths of a second
+$gc = new GifCreatorNextGen();
+$gc->create($frames, $durations, 5); // 5 loops
 $gifBinary = $gc->getGif();
+file_put_contents('/output/animated.gif', $gifBinary);
 ```
 
-Then you can show it in the navigator:
+## Behavior
 
-```php
-header('Content-type: image/gif');
-header('Content-Disposition: filename="butterfly.gif"');
-echo $gifBinary;
-exit;
-```
+- Transparency and dimensions are taken from the first frame.
+- Animated GIFs as input frames are not supported.
 
-Or save it in a folder as a GIF:
+## Credits
 
-```php
-file_put_contents('/myfolder/animated_picture.gif', $gifBinary);
-```
+- Fork, improvements, and maintenance: [kerosindigital](https://github.com/kerosindigital)
+- Original author: Clément Guillemain ([Sybio/GifCreator](https://github.com/Sybio/GifCreator))
 
-### Behavior
+## License
 
-- The transparency is based on the first given frame. It will be saved only if you give multiple frames with same transparent background.
-- The dimensions of the generated GIF are based on the first frame. If you need to resize your frames to get the same dimension, you can use 
-this class: https://github.com/Sybio/ImageWorkshop
-
-### About
-
-The class reuses some part of code of "GIFEncoder.class.php" by László Zsidi (thanks to him).
+MIT – see [LICENSE](./LICENSE)

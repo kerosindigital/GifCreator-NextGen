@@ -1,21 +1,28 @@
 {
-    "name": "sybio/gif-creator",
+    "name": "kerosindigital/gifcreator-nextgen",
     "type": "library",
-    "description": "PHP class that creates animated GIF from multiple images",
-    "keywords": ["gif", "animated", "creation", "encode", "PHP"],
-    "homepage": "https://github.com/Sybio/GifCreator",
+    "description": "Next-generation PHP 8+ fork of Sybio/GifCreator for animated GIF creation, featuring strict typing, robust error handling, and improved resource management.",
+    "keywords": ["gif", "animated", "creation", "php", "gd", "nextgen", "fork"],
+    "homepage": "https://github.com/kerosindigital/gifcreator-nextgen",
     "license": "MIT",
     "authors": [
         {
             "name": "Clément Guillemain",
             "homepage": "http://clementguillemain.fr",
-            "role": "Developer / Freelancer"
+            "role": "Original Author"
+        },
+        {
+            "name": "kerosindigital",
+            "homepage": "https://kerosin.digital",
+            "role": "Maintainer"
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=8.0.0"
     },
     "autoload": {
-        "psr-0": { "GifCreator": "src" }
+        "psr-4": {
+            "GifCreatorNextGen\\": "src/"
+        }
     }
 }
